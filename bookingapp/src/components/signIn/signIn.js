@@ -11,8 +11,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 
 import { useForm } from "react-hook-form";
-
 import { Link as LinkRouter, useNavigate } from "react-router-dom";
+import { signIn } from "../utils/service";
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -24,8 +24,19 @@ export default function SignIn() {
     reset,
   } = useForm();
 
-  const onSubmit = (info) => {
+  const onSubmit = async (info) => {
     console.log(info);
+    try {
+      const response = await signIn(info);
+      const resJson = await response.json();
+      sessionStorage.setItem("Token", resJson.accessToken);
+      if (response.status == 401 || response.status == 400) {
+        throw new Error(response.error);
+      }
+      navigate("/board");
+    } catch (error) {
+      alert(error);
+    }
     reset();
   };
 
@@ -53,22 +64,22 @@ export default function SignIn() {
           sx={{ mt: 1 }}
         >
           <TextField
-            error={!!errors.email?.message}
-            helperText={errors.email?.message}
+            error={!!errors.username?.message}
+            helperText={errors.username?.message}
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Почта"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="Логин"
+            name="username"
+            autoComplete="username"
             autoFocus
-            {...register("email", {
+            {...register("username", {
               required: "Поле обязательно для заполнения",
               pattern: {
-                value:
-                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                message: "Email нейдействителен.",
+                value: /^[a-z]+\.[a-z]+$/i,
+                message:
+                  "Логин должен быть в формате 'Имя.Фамилия' на латнице.",
               },
             })}
           />

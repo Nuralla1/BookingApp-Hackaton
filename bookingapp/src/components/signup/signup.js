@@ -11,6 +11,8 @@ import Container from "@mui/material/Container";
 import { Link as LinkRouter, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
+import { signUp } from "../utils/service";
+
 export default function SignUp() {
   const navigate = useNavigate();
   const {
@@ -20,8 +22,20 @@ export default function SignUp() {
     reset,
   } = useForm();
 
-  const onSubmit = (info) => {
+  const onSubmit = async (info) => {
     console.log(info);
+    try {
+      const response = await signUp(info);
+      const resJson = await response.json();
+
+      if (response.status == 401 || response.status == 400) {
+        throw new Error(response.error);
+      }
+      console.log(resJson);
+      navigate("/");
+    } catch (error) {
+      alert(error);
+    }
     reset();
   };
 
@@ -63,8 +77,9 @@ export default function SignUp() {
                 {...register("firstName", {
                   required: "Поле обязательно для заполнения",
                   pattern: {
-                    value: /^[a-zа-я]+$/i,
-                    message: "Имя не должно содержать цифр и спецсимволов",
+                    value: /^[a-z]+$/i,
+                    message:
+                      "Имя должно быть на латинице, без цифр и спецсимволов",
                   },
                 })}
               />
@@ -82,8 +97,9 @@ export default function SignUp() {
                 {...register("lastName", {
                   required: "Поле обязательно для заполнения",
                   pattern: {
-                    value: /^[a-zа-я]+$/i,
-                    message: "Фамилия не должна содержать цифр и спецсимволов",
+                    value: /^[a-z]+$/i,
+                    message:
+                      "Фамилия должна быть на латинице, без цифр и спецсимволов",
                   },
                 })}
               />
