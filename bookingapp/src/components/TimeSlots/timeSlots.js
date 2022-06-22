@@ -7,16 +7,17 @@ import Box from "@mui/material/Box";
 import Header from "../Header/header";
 
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const Board = () => {
+const TimeSlots = () => {
   const navigate = useNavigate();
-  const rooms = ["404", "304", "303", "302", "301", "203"];
-  useEffect(() => {
-    if (!sessionStorage.length) {
-      navigate("/");
-    }
-  }, []);
+  const { roomNumber, day } = useParams();
+  const timeSlots = ["9:30", "10:00", "17:30", `${roomNumber}`, `${day}`];
+  //   useEffect(() => {
+  //     if (!sessionStorage.length) {
+  //       navigate("/");
+  //     }
+  //   }, []);
   return (
     <>
       <Header />
@@ -33,7 +34,7 @@ const Board = () => {
       >
         <CssBaseline />
         <Typography component="h1" variant="h5">
-          Выберите кабинет, который хотите забронировать
+          {`Выберите доступное время для бронирования кабинета #${roomNumber}. День брони - ${day}`}
         </Typography>
         <Box
           sx={{
@@ -43,10 +44,15 @@ const Board = () => {
             alignItems: "center",
           }}
         >
-          {rooms.map((room) => {
+          {timeSlots.map((slot) => {
             return (
-              <Button key={room} variant="outlined" sx={{ marginTop: 2 }}>
-                {room}
+              <Button
+                key={slot}
+                variant="outlined"
+                sx={{ marginTop: 2 }}
+                style={{ width: "150px" }}
+              >
+                {slot}
               </Button>
             );
           })}
@@ -56,4 +62,4 @@ const Board = () => {
   );
 };
 
-export default Board;
+export default TimeSlots;

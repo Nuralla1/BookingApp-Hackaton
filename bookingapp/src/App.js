@@ -5,7 +5,9 @@ import { Route, Routes } from "react-router-dom";
 
 import SignIn from "./components/signIn/signIn";
 import SignUp from "./components/signup/signup";
-import Board from "./components/Border/border";
+import Days from "./components/Days/days";
+import Rooms from "./components/Rooms/rooms";
+import TimeSlots from "./components/TimeSlots/timeSlots";
 
 const theme = createTheme();
 
@@ -16,7 +18,10 @@ function App() {
         <Routes>
           <Route path="/" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/board" element={<Board />} />
+          <Route path="/rooms" element={<Rooms />} />
+
+          <Route path="/:roomNumber" element={<Days />} />
+          <Route path="/:roomNumber/:day" element={<TimeSlots />} />
         </Routes>
       </div>
     </ThemeProvider>

@@ -33,7 +33,7 @@ export default function SignIn() {
       if (response.status == 401 || response.status == 400) {
         throw new Error(response.error);
       }
-      navigate("/board");
+      navigate("/rooms");
     } catch (error) {
       alert(error);
     }
