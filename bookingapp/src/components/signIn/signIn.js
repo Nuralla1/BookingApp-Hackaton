@@ -25,7 +25,6 @@ export default function SignIn() {
   } = useForm();
 
   const onSubmit = async (info) => {
-    console.log(info);
     try {
       const response = await signIn(info);
       const resJson = await response.json();

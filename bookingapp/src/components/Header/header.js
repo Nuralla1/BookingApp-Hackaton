@@ -28,7 +28,7 @@ export default function Header() {
             <ForestSharpIcon />
           </IconButton>
 
-          <Button color="inherit" onClick={() => navigate("/rooms")}>
+          <Button color="inherit" onClick={() => navigate("/home")}>
             Домой
           </Button>
           <Button color="inherit" onClick={handleExit}>

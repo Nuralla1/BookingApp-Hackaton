@@ -5,11 +5,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 
-import Header from "../Header/header";
-
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import Footer from "../Footer/footer";
 
 const Reservation = () => {
   const location = useLocation();
@@ -28,7 +25,6 @@ const Reservation = () => {
   };
   return (
     <>
-      <Header />
       <Container
         component="main"
         maxWidth="xs"
@@ -37,7 +33,7 @@ const Reservation = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "start",
-          height: "100vh",
+          height: "84vh",
           marginTop: 2,
         }}
       >
@@ -83,7 +79,6 @@ const Reservation = () => {
           </Button>
         </Box>
       </Container>
-      <Footer />
     </>
   );
 };

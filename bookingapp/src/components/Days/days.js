@@ -4,15 +4,13 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 
-import Header from "../Header/header";
-
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 const Days = () => {
   const navigate = useNavigate();
   const { roomNumber } = useParams();
-  const days = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница"];
+  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
   //   useEffect(() => {
   //     if (!sessionStorage.length) {
   //       navigate("/");
@@ -20,7 +18,6 @@ const Days = () => {
   //   }, []);
   return (
     <>
-      <Header />
       <Container
         component="main"
         maxWidth="xs"
@@ -29,7 +26,7 @@ const Days = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "start",
-          height: "100vh",
+          height: "84vh",
           marginTop: 2,
         }}
       >

@@ -6,16 +6,18 @@ import Box from "@mui/material/Box";
 import FormGroup from "@mui/material/FormGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import CircularProgress from "@mui/material/CircularProgress";
 
-import Header from "../Header/header";
-
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { getSlots } from "../utils/service";
 
 const TimeSlots = () => {
   const navigate = useNavigate();
   const { roomNumber, day } = useParams();
+  const [isLoading, setIsLoading] = useState(false);
+  const [timeSlots, setTimeSlots] = useState([]);
 
   const {
     register,
@@ -23,22 +25,31 @@ const TimeSlots = () => {
     formState: { errors },
     reset,
   } = useForm();
-  const timeSlots = [
-    "9:30",
-    "10:00",
-    "11:30",
-    "12:00",
-    "12:30",
-    "13:30",
-    "17:00",
-    `${roomNumber}`,
-    `${day}`,
-  ];
+
   //   useEffect(() => {
   //     if (!sessionStorage.length) {
   //       navigate("/");
   //     }
   //   }, []);
+
+  useEffect(() => {
+    setIsLoading(true);
+    async function fetchData() {
+      try {
+        const response = await getSlots(roomNumber, day);
+        const resJson = await response.json();
+
+        if (response.status == 401 || response.status == 400) {
+          throw new Error(response.error);
+        }
+        setTimeSlots(resJson.body);
+        setIsLoading(false);
+      } catch (error) {
+        alert(error);
+      }
+    }
+    fetchData();
+  }, []);
 
   const onSubmit = (info) => {
     const entries = Object.entries(info);
@@ -51,57 +62,75 @@ const TimeSlots = () => {
   };
   return (
     <>
-      <Header />
-      <Container
-        component="main"
-        maxWidth="xs"
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "start",
-          height: "100vh",
-          marginTop: 2,
-        }}
-      >
-        <CssBaseline />
-        <Typography component="h1" variant="h5">
-          {`Выберите доступное время для бронирования кабинета #${roomNumber}. День брони - ${day}`}
-        </Typography>
-        <Box
-          component="form"
-          onSubmit={handleSubmit(onSubmit)}
-          noValidate
+      {isLoading ? (
+        <Container
+          component="main"
+          maxWidth="xs"
           sx={{
-            marginTop: 2,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+            justifyContent: "start",
+            height: "100vh",
+            marginTop: 2,
           }}
         >
-          {timeSlots.map((slot) => {
-            return (
-              <FormGroup key={slot}>
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label={`${slot}`}
-                  sx={{ width: "100px" }}
-                  {...register(`${slot}`)}
-                />
-              </FormGroup>
-            );
-          })}
-
-          <Button
-            type="submit"
-            variant="contained"
-            sx={{ marginTop: 2 }}
-            style={{ width: "150px" }}
+          <Box sx={{ display: "flex" }}>
+            <CircularProgress />
+          </Box>
+        </Container>
+      ) : (
+        <Container
+          component="main"
+          maxWidth="xs"
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "start",
+            height: "100vh",
+            marginTop: 2,
+          }}
+        >
+          <CssBaseline />
+          <Typography component="h1" variant="h5">
+            {`Выберите доступное время для бронирования кабинета #${roomNumber}. День брони - ${day}`}
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}
+            noValidate
+            sx={{
+              marginTop: 2,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            Подтвердить
-          </Button>
-        </Box>
-      </Container>
+            {timeSlots.map((slot) => {
+              return (
+                <FormGroup key={slot}>
+                  <FormControlLabel
+                    control={<Checkbox />}
+                    label={`${slot}`}
+                    sx={{ width: "100px" }}
+                    {...register(`${slot}`)}
+                  />
+                </FormGroup>
+              );
+            })}
+
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{ marginTop: 2 }}
+              style={{ width: "150px" }}
+            >
+              Подтвердить
+            </Button>
+          </Box>
+        </Container>
+      )}
     </>
   );
 };

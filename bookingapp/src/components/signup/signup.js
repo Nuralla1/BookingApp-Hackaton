@@ -23,7 +23,6 @@ export default function SignUp() {
   } = useForm();
 
   const onSubmit = async (info) => {
-    console.log(info);
     try {
       const response = await signUp(info);
       const resJson = await response.json();

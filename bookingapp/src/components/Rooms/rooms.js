@@ -4,11 +4,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 
-import Header from "../Header/header";
-
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Footer from "../Footer/footer";
 
 const Rooms = () => {
   const navigate = useNavigate();
@@ -20,7 +17,6 @@ const Rooms = () => {
   //   }, []);
   return (
     <>
-      <Header />
       <Container
         component="main"
         maxWidth="xs"
@@ -29,7 +25,7 @@ const Rooms = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "start",
-          height: "100vh",
+          height: "84vh",
           marginTop: 2,
         }}
       >
@@ -59,7 +55,6 @@ const Rooms = () => {
           })}
         </Box>
       </Container>
-      <Footer />
     </>
   );
 };
