@@ -28,8 +28,9 @@ const Days = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
-          height: "60vh",
+          justifyContent: "start",
+          height: "100vh",
+          marginTop: 2,
         }}
       >
         <CssBaseline />

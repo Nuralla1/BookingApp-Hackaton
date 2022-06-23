@@ -8,6 +8,7 @@ import Header from "../Header/header";
 
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Footer from "../Footer/footer";
 
 const Rooms = () => {
   const navigate = useNavigate();
@@ -27,8 +28,9 @@ const Rooms = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
-          height: "60vh",
+          justifyContent: "start",
+          height: "100vh",
+          marginTop: 2,
         }}
       >
         <CssBaseline />
@@ -57,6 +59,7 @@ const Rooms = () => {
           })}
         </Box>
       </Container>
+      <Footer />
     </>
   );
 };

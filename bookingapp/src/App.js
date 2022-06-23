@@ -8,6 +8,7 @@ import SignUp from "./components/signup/signup";
 import Days from "./components/Days/days";
 import Rooms from "./components/Rooms/rooms";
 import TimeSlots from "./components/TimeSlots/timeSlots";
+import Reservation from "./components/Reservation/reservation";
 
 const theme = createTheme();
 
@@ -19,7 +20,7 @@ function App() {
           <Route path="/" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/rooms" element={<Rooms />} />
-
+          <Route path="/reservation" element={<Reservation />} />
           <Route path="/:roomNumber" element={<Days />} />
           <Route path="/:roomNumber/:day" element={<TimeSlots />} />
         </Routes>
