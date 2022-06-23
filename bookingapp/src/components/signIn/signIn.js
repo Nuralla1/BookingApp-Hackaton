@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { Link as LinkRouter, useNavigate } from "react-router-dom";
 import { signIn } from "../utils/service";
 
-export default function SignIn() {
+export default function SignIn({ callback }) {
   const navigate = useNavigate();
 
   const {
@@ -26,13 +26,17 @@ export default function SignIn() {
 
   const onSubmit = async (info) => {
     try {
+      console.log(info);
       const response = await signIn(info);
       const resJson = await response.json();
-      sessionStorage.setItem("Token", resJson.accessToken);
+      console.log(response);
+      console.log(resJson);
+      sessionStorage.setItem("Token", resJson.body.accessToken);
       if (response.status == 401 || response.status == 400) {
         throw new Error(response.error);
       }
-      navigate("/rooms");
+      callback();
+      navigate("/home");
     } catch (error) {
       alert(error);
     }
@@ -48,6 +52,7 @@ export default function SignIn() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          height: "80vh",
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -122,7 +127,11 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item>
-              <Button onClick={() => navigate("/signup")} variant="outlined">
+              <Button
+                onClick={() => navigate("/signup")}
+                variant="outlined"
+                style={{ width: "400px" }}
+              >
                 Нет аккаунта? Зарегистрируйтесь
               </Button>
             </Grid>

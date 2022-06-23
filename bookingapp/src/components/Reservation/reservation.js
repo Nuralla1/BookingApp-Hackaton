@@ -7,9 +7,12 @@ import Box from "@mui/material/Box";
 
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { addReservation } from "../utils/service";
+import { useState } from "react";
 
 const Reservation = () => {
   const location = useLocation();
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -18,9 +21,17 @@ const Reservation = () => {
     reset,
   } = useForm();
 
-  const onSubmit = (info) => {
+  const onSubmit = async (info) => {
     const obj = { ...info, ...location.state };
-    console.log(obj);
+    try {
+      const response = await addReservation(obj);
+      const resJson = await response.json();
+
+      console.log(response);
+      console.log(resJson);
+    } catch (error) {
+      alert(error);
+    }
     reset();
   };
   return (
@@ -53,18 +64,18 @@ const Reservation = () => {
           }}
         >
           <TextField
-            error={!!errors.description?.message}
-            helperText={errors.description?.message}
+            error={!!errors.meetingName?.message}
+            helperText={errors.meetingName?.message}
             margin="normal"
             required
             fullWidth
-            id="description"
+            id="meetingName"
             label="Цель бронирования"
-            name="description"
-            autoComplete="description"
+            name="meetingName"
+            autoComplete="meetingName"
             autoFocus
             multiline
-            {...register("description", {
+            {...register("meetingName", {
               required: "Поле обязательно для заполнения",
             })}
           />

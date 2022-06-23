@@ -47,6 +47,7 @@ export default function SignUp() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          height: "80vh",
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -156,7 +157,11 @@ export default function SignUp() {
           </Button>
           <Grid container>
             <Grid item>
-              <Button onClick={() => navigate("/")} variant="outlined">
+              <Button
+                onClick={() => navigate("/")}
+                variant="outlined"
+                style={{ width: "400px" }}
+              >
                 Есть аккаунт? Авторизируйтесь
               </Button>
             </Grid>

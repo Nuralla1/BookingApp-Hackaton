@@ -57,7 +57,7 @@ const TimeSlots = () => {
       .filter((entry) => entry[1])
       .map((entries) => entries[0]);
     navigate("/reservation", {
-      state: { time: trueInfo, room: roomNumber, day: day },
+      state: { room: `R${roomNumber}`, weekDay: day, timeList: trueInfo },
     });
   };
   return (
@@ -70,7 +70,7 @@ const TimeSlots = () => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            justifyContent: "start",
+            justifyContent: "center",
             height: "100vh",
             marginTop: 2,
           }}

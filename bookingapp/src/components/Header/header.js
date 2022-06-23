@@ -8,10 +8,11 @@ import ForestSharpIcon from "@mui/icons-material/ForestSharp";
 
 import { useNavigate } from "react-router-dom";
 
-export default function Header() {
+export default function Header({ callback }) {
   const navigate = useNavigate();
   function handleExit() {
     sessionStorage.clear();
+    callback();
     navigate("/");
   }
   return (

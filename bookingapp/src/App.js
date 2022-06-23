@@ -13,22 +13,36 @@ import Header from "./components/Header/header";
 import Footer from "./components/Footer/footer";
 // import Main from "./components/main/main";
 
+import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+
 const theme = createTheme();
 
 function App() {
+  const location = useLocation();
+  const [isLoginOrSignUp, setIsLoginOrSignUp] = useState(false);
+
+  function hideHeaderFooter() {
+    setIsLoginOrSignUp((prev) => !prev);
+  }
+  useEffect(() => {
+    if (location.pathname === "/" || location.pathname === "/signup") {
+      setIsLoginOrSignUp(true);
+    }
+  }, []);
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <Header />
+        {isLoginOrSignUp ? null : <Header callback={hideHeaderFooter} />}
         <Routes>
-          <Route path="/" element={<SignIn />} />
+          <Route path="/" element={<SignIn callback={hideHeaderFooter} />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/home" element={<Rooms />} />
           <Route path="/reservation" element={<Reservation />} />
           <Route path="/:roomNumber" element={<Days />} />
           <Route path="/:roomNumber/:day" element={<TimeSlots />} />
         </Routes>
-        <Footer />
+        {isLoginOrSignUp ? null : <Footer />}
       </div>
     </ThemeProvider>
   );
