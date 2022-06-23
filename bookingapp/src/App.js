@@ -15,6 +15,7 @@ import Footer from "./components/Footer/footer";
 
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Profile from "./components/UserProfile/userProfile";
 
 const theme = createTheme();
 
@@ -39,6 +40,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/home" element={<Rooms />} />
           <Route path="/reservation" element={<Reservation />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/:roomNumber" element={<Days />} />
           <Route path="/:roomNumber/:day" element={<TimeSlots />} />
         </Routes>

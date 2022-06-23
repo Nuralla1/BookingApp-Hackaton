@@ -26,11 +26,8 @@ export default function SignIn({ callback }) {
 
   const onSubmit = async (info) => {
     try {
-      console.log(info);
       const response = await signIn(info);
       const resJson = await response.json();
-      console.log(response);
-      console.log(resJson);
       sessionStorage.setItem("Token", resJson.body.accessToken);
       if (response.status == 401 || response.status == 400) {
         throw new Error(response.error);

@@ -32,6 +32,9 @@ export default function Header({ callback }) {
           <Button color="inherit" onClick={() => navigate("/home")}>
             Домой
           </Button>
+          <Button color="inherit" onClick={() => navigate("/profile")}>
+            Профиль
+          </Button>
           <Button color="inherit" onClick={handleExit}>
             Выйти
           </Button>

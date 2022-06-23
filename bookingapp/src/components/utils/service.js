@@ -1,12 +1,4 @@
 const baseUrl = "http://localhost:6060/api";
-// const configObjAuth = (obj) => ({
-//   method: "POST",
-//   body: JSON.stringify(obj),
-//   headers: {
-//     "Content-Type": "application/json",
-//     Accept: "application/json",
-//   },
-// });
 
 export function signIn(obj) {
   const response = fetch(`${baseUrl}/auth/signin`, {
@@ -33,12 +25,10 @@ export function signUp(obj) {
 }
 
 export function getSlots(room, day) {
-  //   const token = sessionStorage.getItem("Token");
   const response = fetch(
     `${baseUrl}/booking/booking-room?room=R${room}&weekday=${day}`,
     {
       method: "GET",
-
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -46,7 +36,6 @@ export function getSlots(room, day) {
       },
     }
   );
-
   return response;
 }
 
@@ -59,6 +48,18 @@ export function addReservation(obj) {
       "Content-Type": "application/json",
       Accept: "*/*",
       Authorization: `Bearer ${token}`,
+    },
+  });
+  return response;
+}
+
+export function getUserReservations() {
+  const response = fetch(`${baseUrl}/booking/show-my-reservation`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${sessionStorage.getItem("Token")}`,
     },
   });
   return response;
