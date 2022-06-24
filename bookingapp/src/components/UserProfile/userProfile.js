@@ -98,6 +98,7 @@ const Profile = () => {
                       </Typography>
                       <Typography>{`${reservation.day}`}</Typography>
                       <Typography>{`${reservation.time}`}</Typography>
+                      <Typography>{`${reservation.firstName}`}</Typography>
                     </CardContent>
                     <CardActions>
                       <Button size="small">Delete</Button>
